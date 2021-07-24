@@ -1,8 +1,9 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import { Icon } from 'react-native-elements';
 
-const Category = ({ styles, isDarkMode }) => {
+const Category = ({ handlePress=function(){}, styles, isDarkMode, iconSize=40, fontSize=18 }) => {
+
     const categories = [
         {
             name: 'Miasto',
@@ -27,17 +28,16 @@ const Category = ({ styles, isDarkMode }) => {
         }
     ];
 
-
     return (
         <>
             {
                 categories.map( (cat, id) => (
-                    <View key={ `kat${id}` } style={ styles.categoryContainer }>
-                        <View style={{ backgroundColor: cat.color, borderRadius: 100, padding: 20 }}>
-                            <Icon name={ cat.icon } type={ cat.type || '' } size={ 40 } color="#fff"/>
+                    <TouchableOpacity onPress={ () => handlePress( cat.name ) } key={ `kat${id}` } style={ styles.categoryContainer }>
+                        <View style={{ backgroundColor: cat.color, borderRadius: 100, padding: iconSize/2 }}>
+                            <Icon name={ cat.icon } type={ cat.type || '' } size={ iconSize } color="#fff"/>
                         </View>
-                        <Text style={{ color: isDarkMode? '#f3f3f3': styles.StaticText.color, fontSize: 18 }}>{ cat.name }</Text>
-                    </View>
+                        <Text style={{ color: isDarkMode? '#f3f3f3': styles.StaticText.color, fontSize }}>{ cat.name }</Text>
+                    </TouchableOpacity>
                 ))
             }
         </>
