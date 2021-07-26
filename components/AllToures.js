@@ -13,6 +13,7 @@ import {
 import * as styles from "components/css";
 import Category from "components/Category";
 import AIcon from "components/animated/AIcon";
+import MockToures from "components/mock/MockToures";
 
 import { Icon } from "react-native-elements";
 import { Dimensions } from 'react-native';
@@ -75,8 +76,16 @@ const AllToures = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <Animated.View 
-                style={
-                    { display: "flex", flexDirection: "row", alignItems: "center",zIndex: 1, elevation: 1,
+                style={{ 
+                    display: "flex", 
+                    flexDirection: "row", 
+                    alignItems: "center",
+                    zIndex: 1, 
+                    elevation: 1,
+                    position: "absolute",
+                    top: 90,
+                    shadowColor: 'grey',
+                    shadowOpacity: 1,
                     transform: [{ translateY: interPass }]
                 }} 
             >
@@ -88,6 +97,12 @@ const AllToures = ({ navigation }) => {
                     <Category styles={ styles } isDarkMode={ false } iconSize={ 25 } fontSize={ 18 } handlePress={ handlePress } />
                 </ScrollView>
             </Animated.View>
+
+            <ScrollView style={{ marginTop: visible ? 90 : 0 }}>
+
+                <MockToures />
+
+            </ScrollView>
         </SafeAreaView>
     )
 }

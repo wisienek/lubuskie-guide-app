@@ -1,0 +1,23 @@
+[
+    {
+        "id": 0,
+        "group": 0,
+        "place": "Miasto Gorzów Wielkopolski",
+        "img": "https://i.imgur.com/iHAJj98.jpg",
+        "parent": true,
+        "next": 1,
+        "prev": null
+    },
+    {
+        "id": 1,
+        "group": 0,
+        "part": 1,
+        "place": "Gorzów Wielkopolski - Przystań",
+        "img": "https://i.imgur.com/iHAJj98.jpg",
+        "aprox": 2,
+        "commune": "spacer",
+        "parent": false,
+        "next": 2,
+        "prev": 1
+    }
+]

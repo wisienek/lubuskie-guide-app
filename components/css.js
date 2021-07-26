@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 
-
 const styles = StyleSheet.create({
    StaticText: {
       color: "#3C3C3C"
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
       alignItems: "center" 
    }
 });
-
 
 
 module.exports = styles;

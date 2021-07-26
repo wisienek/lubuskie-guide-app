@@ -1,0 +1,29 @@
+[
+    {
+        "name": "Polubione",
+        "color": "red",
+        "icon": "heart",
+        "type": "entypo"
+    },
+    {
+        "name": "Miasto",
+        "color": "#C93283",
+        "icon": "location-city"
+    },
+    {
+        "name": "Szlaki",
+        "color": "#3F987D",
+        "icon": "tent",
+        "type": "fontisto"
+    },
+    {
+        "name": "Z Wodą",
+        "color": "#546ECB",
+        "icon": "pool"
+    },
+    {
+        "name": "Historia",
+        "color": "#B17500",
+        "icon": "history-edu"
+    }
+]
