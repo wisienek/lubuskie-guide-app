@@ -5,25 +5,23 @@ import {
     Image
 } from "react-native";
 
-import Toures from "components/data/MockToures";
 import Groups from "components/data/groups";
 
-const MockToures = () => {
+const MockToures = ({ Toures, main }) => {
     return (
         <>
-
             {
                 Toures.map((tour, ind)=> (
                     <View 
                         key={ `g-${ind}` }
                         style={{
-                            backgroundColor: 'white',
+                            backgroundColor: main? "#bababa": 'white',
                             paddingBottom: 10,
                             paddingTop: 10,
                             paddingLeft: 20,
                             paddingRight: 20,
                             marginTop: 20,
-                            height: 130,
+                            height: main? 120: 130,
                             overflow: "hidden",
                             display: "flex",
                             flexDirection: "row"
@@ -60,7 +58,6 @@ const MockToures = () => {
                     </View>
                 ))
             }
-
         </>
     )
 }

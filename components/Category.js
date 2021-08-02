@@ -4,8 +4,8 @@ import { Icon } from 'react-native-elements';
 
 import Categories from "components/data/categories";
 
-const Category = ({ handlePress=function(){}, styles, isDarkMode, iconSize=40, fontSize=18 }) => {
-
+const Category = ({ handlePress=function(){}, styles, iconSize=40, fontSize=18, textColor="black", selected=[] }) => {
+    
     return (
         <>
             {
@@ -14,7 +14,7 @@ const Category = ({ handlePress=function(){}, styles, isDarkMode, iconSize=40, f
                         <View style={{ backgroundColor: cat.color, borderRadius: 100, padding: iconSize/2 }}>
                             <Icon name={ cat.icon } type={ cat.type || '' } size={ iconSize } color="#fff"/>
                         </View>
-                        <Text style={{ color: isDarkMode? '#f3f3f3': styles.StaticText.color, fontSize }}>{ cat.name }</Text>
+                        <Text style={{ fontWeight: selected.indexOf(cat.name) > -1? "bold": "normal", color: textColor, fontSize }}>{ cat.name }</Text>
                     </TouchableOpacity>
                 ))
             }
