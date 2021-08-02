@@ -1,23 +1,43 @@
 import React from 'react';
-import { View } from "react-native";
-import { Icon } from "react-native-elements";
+import { TouchableOpacity, View } from "react-native";
+import LottieView from 'lottie-react-native';
 
+const RecomendedPlaces = ({ onLikeRecomended, isLiked, id }) => {
+    const animationRef = React.useRef(null);
+    const first = React.useRef(true);
 
+    React.useEffect(()=>{
+        if( first.current === true ) {
+            if( isLiked ) {
+                animationRef.current.play(66, 66);
+            } else {
+                animationRef.current.play(19, 19);
+            }
 
-const RecomendedPlaces = ({ onLikeRecomended }) => {
-    const d = new Array(10).fill();
-
+            first.current = false;
+        } else if( isLiked ) {
+            animationRef.current.play(19, 50);
+        } else {
+            animationRef.current.play(0, 19);
+        }
+    }, [ isLiked ]);
+    
     return (
         <>
-            {
-                d.map((k, id)=>(
-                    <View key={`rec${id}`} style={{ marginRight: 10, width: 200, height: 240, backgroundColor: '#C4C4C4', borderRadius: 20 }} >
-                        <View style={{ position: 'absolute', right: 10, bottom: 10, backgroundColor: '#fff', borderRadius: 100, padding: 5 }} onTouchStart={ () => onLikeRecomended(id) }>
-                            <Icon name="heart-outlined" type="entypo" size={ 40 } color="red" />
-                        </View>
-                    </View>
-                ))
-            }
+            <View style={{ marginRight: 10, width: 200, height: 240, backgroundColor: '#C4C4C4', borderRadius: 20 }} >
+                <TouchableOpacity style={{ position: 'absolute', right: 10, bottom: 10, backgroundColor: '#fff', borderRadius: 100 }} onPress={ () => onLikeRecomended(id) }>
+                    <LottieView 
+                        ref={ animationRef }
+                        style={{
+                            width: 60,
+                            height: 60
+                        }}
+                        autoPlay={ false }
+                        loop={ false }
+                        source={ require('./animated/likeAnimation.json') }
+                    />
+                </TouchableOpacity>
+            </View>
         </>
     )
 }
