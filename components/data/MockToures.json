@@ -4,6 +4,7 @@
         "group": 0,
         "place": "Miasto Gorzów Wielkopolski",
         "img": "https://i.imgur.com/iHAJj98.jpg",
+        "categories": ["Miasto", "Historia"],
         "parent": true,
         "next": 1,
         "prev": null
@@ -14,6 +15,7 @@
         "part": 1,
         "place": "Gorzów Wielkopolski - Przystań",
         "img": "https://i.imgur.com/iHAJj98.jpg",
+        "categories" : [],
         "aprox": 2,
         "commune": "spacer",
         "parent": false,
