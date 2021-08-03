@@ -14,9 +14,9 @@ enableScreens();
 import AllToures from './components/AllToures';
 import MainScreen from './components/MainScreen';
 import Menu from './components/Menu';
+import TourInfo from "./components/TourInfo";
 
 import LikedContext from './components/context/LikedContext';
-
 
 const icons = {
    "Główna": {
@@ -26,9 +26,12 @@ const icons = {
    "Wszystkie Miejsca" : {
       name: "find-replace",
       type: "materialIcons"
+   },
+   "Post": {
+      name: "book",
+      type: "entypo"
    }
 }
-
 
 const Drawer = createDrawerNavigator();
 
@@ -49,8 +52,22 @@ const App = () => {
                      )
                   })}
                >
-                  <Drawer.Screen name="Główna" component={ MainScreen } />
-                  <Drawer.Screen name="Wszystkie Miejsca" component={ AllToures } />
+                  <Drawer.Screen 
+                     name="Główna" 
+                     component={ MainScreen }
+                     options={{
+                        iconName:"map",
+                        iconType:"material"
+                     }}
+                  />
+                  <Drawer.Screen 
+                     name="Wszystkie Miejsca" 
+                     component={ AllToures } 
+                  />
+                  <Drawer.Screen 
+                     name="Post" 
+                     component={ TourInfo } 
+                  />
                </Drawer.Navigator>
             </NavigationContainer>
          </LikedContext>
