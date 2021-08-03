@@ -15,8 +15,15 @@ import * as styles from "components/css";
 import { Icon } from "react-native-elements";
 
 
-
 const Menu = ( props ) => {
+    const filteredProps = {
+        ...props,
+        state: {
+            ...props.state,
+            routeNames: props.state.routeNames.filter( (routeName) => routeName !== 'Post' ),
+            routes: props.state.routes.filter( (route) => route.name !== 'Post' ),
+        },
+      };
 
     return (
         <View style={{ display: "flex", flexDirection: "column", backgroundColor: "#505050", height: "100%", width: "100%" }}>
@@ -49,7 +56,7 @@ const Menu = ( props ) => {
                     }} 
                     activeTintColor="white" 
                     inactiveTintColor="white"
-                    { ...props } 
+                    { ...filteredProps } 
                 />
             </View>
         </View>
