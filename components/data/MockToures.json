@@ -5,6 +5,7 @@
         "place": "Miasto Gorzów Wielkopolski",
         "img": "https://i.imgur.com/iHAJj98.jpg",
         "categories": ["Miasto", "Historia"],
+        "aprox": 2.5,
         "parent": true,
         "next": 1,
         "prev": null
