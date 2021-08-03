@@ -1,19 +1,22 @@
 import React from "react";
 import { 
     View,
+    TouchableOpacity,
     Text,
     Image
 } from "react-native";
 
-import Groups from "components/data/groups";
-
-const MockToures = ({ Toures, main }) => {
+const MockToures = ({ navigation, Toures, main }) => {
     return (
         <>
             {
                 Toures.map((tour, ind)=> (
-                    <View 
+                    <TouchableOpacity 
                         key={ `g-${ind}` }
+                        onPress={()=> {
+                            console.log(`Pressed ${tour.id}`);
+                            navigation.navigate("Post", { tour });
+                        }}
                         style={{
                             backgroundColor: main? "#bababa": 'white',
                             paddingBottom: 10,
@@ -55,7 +58,7 @@ const MockToures = ({ Toures, main }) => {
                                     :null
                                 }
                         </View>
-                    </View>
+                    </TouchableOpacity>
                 ))
             }
         </>
