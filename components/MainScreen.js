@@ -30,6 +30,7 @@ import * as styles from "components/css";
 import Category from 'components/Category';
 import RecomendedPlaces from "components/RecomendedPlaces";
 import MockToures from "components/mock/MockToures";
+import MenuItem from "components/MenuItem";
 
 
 const MainScreen = ({ navigation }) => {
@@ -42,7 +43,7 @@ const MainScreen = ({ navigation }) => {
       let ltext = input.toLowerCase();
       
       setFiltered( [...Toures.filter(tour=> tour.place.toLowerCase().indexOf(ltext) > -1 )] );
-      setSearched(ltext);
+      setSearched( ltext );
    }
 
    const handlePress = ( name ) => {
@@ -54,9 +55,7 @@ const MainScreen = ({ navigation }) => {
       <SafeAreaView>
          <ImageBackground source={ require('src/bg2.jpg') } style={{ width: Dimensions.get('window').width, height: Dimensions.get('window').height, display: "flex", alignItems: "center" }}>
             
-            <TouchableOpacity onPress={ () => navigation.toggleDrawer() } style={{ position: "absolute", right: 10, top: 10, width: 50, height: 50, zIndex: 100 }}>
-               <Icon name="menu" color="#fff" size={ 50 } />
-            </TouchableOpacity>
+            <MenuItem navigation={ navigation } />
 
             <View style={ styles.logoContainer } >
                <View >

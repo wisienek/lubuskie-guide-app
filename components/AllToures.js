@@ -166,7 +166,7 @@ const AllToures = ({ navigation, route }) => {
 
             <ScrollView style={{ marginTop: visible ? 90 : 0 }}>
 
-                <MockToures Toures={ filtered } />
+                <MockToures Toures={ filtered } navigation={ navigation } />
 
             </ScrollView>
         </SafeAreaView>
