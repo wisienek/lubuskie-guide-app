@@ -6,7 +6,7 @@ const RecomendedPlaces = ({ onLikeRecomended, isLiked, id }) => {
     const animationRef = React.useRef(null);
     const first = React.useRef(true);
 
-    React.useEffect(()=>{
+    React.useEffect(() => {
         if( first.current === true ) {
             if( isLiked ) {
                 animationRef.current.play(66, 66);
