@@ -12,6 +12,7 @@ import * as styles from "components/css";
 enableScreens();
 
 import AllToures from './components/AllToures';
+import Credits from './components/Credits';
 import MainScreen from './components/MainScreen';
 import Menu from './components/Menu';
 import TourInfo from "./components/TourInfo";
@@ -29,6 +30,10 @@ const icons = {
    },
    "Post": {
       name: "book",
+      type: "entypo"
+   },
+   "Kredyty": {
+      name: "info",
       type: "entypo"
    }
 }
@@ -67,6 +72,10 @@ const App = () => {
                   <Drawer.Screen 
                      name="Post" 
                      component={ TourInfo } 
+                  />
+                  <Drawer.Screen 
+                     name="Kredyty" 
+                     component={ Credits } 
                   />
                </Drawer.Navigator>
             </NavigationContainer>
