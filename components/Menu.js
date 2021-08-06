@@ -3,12 +3,11 @@ import React from 'react';
 import {
     View,
     Text,
-    TouchableOpacity,
-    Linking
+    TouchableOpacity
 } from "react-native";
 
 import {
-    DrawerItem,
+    DrawerContentScrollView,
     DrawerItemList,
 } from '@react-navigation/drawer';
 
@@ -59,18 +58,6 @@ const Menu = ( props ) => {
                     inactiveTintColor="white"
                     { ...filteredProps } 
                 />
-                <DrawerItem 
-                    label={ () => <Text style={{ color: 'white' }}>Strona</Text> }
-                    icon={ () => <Icon name="web" type="material-community-icons" size={ 40 } color={ "#EAEAEA" } /> }
-                    style={{ 
-                        borderLeftWidth: 4,
-                        borderColor: "#a1a1a1" 
-                    }} 
-                    onPress={ () => Linking.openURL('https://www.lubuskiebezbarier.pl') }
-                />
-                <View>
-
-                </View>
             </View>
         </View>
     )

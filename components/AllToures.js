@@ -4,6 +4,7 @@ import {
     Animated,
     SafeAreaView,
     ScrollView,
+    Dimensions,
     Text,
     TextInput,
     TouchableWithoutFeedback,
@@ -15,9 +16,10 @@ import * as styles from "components/css";
 import Category from "components/Category";
 import AIcon from "components/animated/AIcon";
 import MockToures from "components/mock/MockToures";
+import * as TI from "./data/MockTouresInfo.json";
+
 
 import { Icon } from "react-native-elements";
-import { Dimensions } from 'react-native';
 
 // data
 import { Context } from "./context/LikedContext";
@@ -166,7 +168,7 @@ const AllToures = ({ navigation, route }) => {
 
             <ScrollView style={{ marginTop: visible ? 90 : 0 }}>
 
-                <MockToures Toures={ filtered } navigation={ navigation } />
+                <MockToures Toures={ filtered } navigation={ navigation } touresInfo={ TI } />
 
             </ScrollView>
         </SafeAreaView>
