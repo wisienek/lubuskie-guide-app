@@ -6,7 +6,7 @@ import {
     Image
 } from "react-native";
 
-const MockToures = ({ navigation, Toures, main }) => {
+const MockToures = ({ navigation, Toures, main, touresInfo }) => {
     return (
         <>
             {
@@ -14,8 +14,7 @@ const MockToures = ({ navigation, Toures, main }) => {
                     <TouchableOpacity 
                         key={ `g-${ind}` }
                         onPress={()=> {
-                            console.log(`Pressed ${tour.id}`);
-                            navigation.navigate("Post", { tour });
+                            touresInfo[ tour.id ] && navigation.navigate("Post", { tour });
                         }}
                         style={{
                             backgroundColor: main? "#bababa": 'white',
