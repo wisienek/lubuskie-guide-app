@@ -7,33 +7,59 @@ import {
     View,
     TouchableOpacity,
     Image,
-    ImageBackground
+    ImageBackground,
+    TouchableWithoutFeedback,
+    Alert
 } from "react-native";
+
+import { Icon } from "react-native-elements";
 
 import LottieView from 'lottie-react-native';
 
 import { Context } from "./context/LikedContext";
 import * as TI from "./data/MockTouresInfo.json";
+import MockToures from "./data/MockToures.json";
 
 import MenuItem from "components/MenuItem";
 import Dissabilities from "components/Dissabilities";
+
 
 const styles = StyleSheet.create({
     category : {
         fontSize: 18,
         marginRight: 10,
-        color: 'black'
+        color: 'black',
+        fontFamily: 'Adamina-Regular'
     },
     selectedCat : {
         color: "#BA0000",
         fontSize: 18,
-        marginRight: 10
+        marginRight: 10,
+        fontFamily: 'Adamina-Regular'
+    },
+    tourText: {
+        fontSize: 18,
+        color: 'black'
+    },
+    tourNav: {
+        width: "100%", 
+        height: 70, 
+        display: 'flex', 
+        flexDirection: 'row',
+        marginTop: 'auto'
+    },
+    tourNavItem: {
+        width: "33.33%", 
+        height: "100%", 
+        display: 'flex', 
+        flexDirection: 'row', 
+        justifyContent: 'center', 
+        alignItems: 'center'
     }
 });
 
 const categories = ["Trasa", "Informacje", "Wydarzenia", "Warto Zobaczyć"];
-const SelectedCategory = ({ selected="Trasa" }) => {
-
+const SelectedCategory = ({ selected="Trasa", switchCat }) => {
     return (
         <ScrollView
             horizontal={ true }
@@ -46,17 +72,70 @@ const SelectedCategory = ({ selected="Trasa" }) => {
         >
             {
                 categories.map( (cat, i) => (
-                    <View key={ `cat-${i}` }>
-                        <Text style={ selected === cat ? styles.selectedCat : styles.category } >{ cat }</Text>
-                        {
-                            selected === cat?
-                                <View style={{ width: 10, height: 10, borderRadius: 50, color: '#BA0000' }} />
-                            :null
-                        }
-                    </View>
+                    <TouchableWithoutFeedback onPress={ ()=> switchCat( cat ) } key={ `cat-${i}` } >
+                        <View style={{ alignItems: 'center', height: 55, marginRight: 5 }} >
+                            <Text style={ selected === cat ? styles.selectedCat : styles.category } >{ cat }</Text>
+                            {
+                                selected === cat ?
+                                    <View style={{ width: 10, height: 10, borderRadius: 20, backgroundColor: '#BA0000' }} />
+                                :null
+                            }
+                        </View>
+                    </TouchableWithoutFeedback>
                 ))
             }
         </ScrollView>
+    )
+}
+
+const TourContent = ({ selected="Trasa", current={} }) => {
+    const getContent = () => {
+        switch (selected) {
+            case "Trasa": case "Wydarzenia": case "Warto Zobaczyć": {
+                return (
+                    current[ selected ]?
+                        current[ selected ].map((t,i) => (
+                            <Text key={`t-${i}`} style={ styles.tourText }>- { t } </Text>
+                        ))
+                    :null
+                )
+            }
+            case "Informacje": {
+                return (
+                    current?.Informacje?
+                        <Text style={{ fontSize: 16 }} >{ current.Informacje }</Text>
+                    :null
+                )
+            }
+        }
+    }
+
+    return (
+        <View style={{ marginTop: 10 }}>
+            <Text style={{ fontSize: 24, fontFamily: 'Adamina-Regular' }}>{ selected }:</Text>
+            {
+                getContent()
+            }
+        </View>
+    )
+}
+
+const Controlls = ({ navigation, current, swtichPost }) => {
+    return (
+        <View style={ styles.tourNav }>
+            <TouchableOpacity onPress={ ()=> swtichPost( current.prev ) } style={{ ...styles.tourNavItem, backgroundColor: '#E9AEAE' }}>
+                <Icon name="arrow-left" type="simple-line-icons" color="white" size={ 27 } />
+                <Text style={{ color: "white", fontSize: 18 }}>Poprzedni</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ ()=> navigation.navigate("Wszystkie Miejsca") } style={{ ...styles.tourNavItem, backgroundColor: '#D2D985' }}>
+                <Icon name="menu-book" type="material-icons" color="white" size={ 27 } />
+                <Text style={{ color: "white", fontSize: 18 }}>Lista</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={ ()=> swtichPost( current.next ) } style={{ ...styles.tourNavItem, backgroundColor: '#7BD399' }}>
+                <Text style={{ color: "white", fontSize: 18 }}>Następny</Text>
+                <Icon name="arrow-right" type="simple-line-icons" color="white" size={ 27 } />
+            </TouchableOpacity>
+        </View>
     )
 }
 
@@ -75,9 +154,23 @@ const TourInfo = ({ navigation, route }) => {
         if( id )
             toggleLiked( id );
 
-        console.log(id, liked);
+        // console.log(id, liked);
     }
     const switchCat = ( cat ) => setSelectedCat( cat );
+
+    const swtichPost = ( id ) => {
+        if( !id ) return;
+        const found = MockToures.find( tour=> tour.id === id );
+        if( !found )
+            return Alert.alert("Błąd", `Wystąpił błąd podczas ładowania ścieżki (${id})`);
+
+        route.params.tour = found;
+        if( !TI[ id ] )
+            return Alert.alert("Błąd", `Nie znaleziono informacji dla ścieżki (${id})`);
+
+        setCurrent( TI[ id ] );
+        navigation.navigate('Post', { tour: found });
+    }
 
 
     React.useEffect(()=>{
@@ -103,12 +196,12 @@ const TourInfo = ({ navigation, route }) => {
     }, [ route?.params?.tour, liked ]);
 
     return (
-        <View>
+        < >
             <View 
                 style={{
                     width: "100%",
                     height: "30%",
-                    backgroundColor: 'rgba(0,0,0, 1)'
+                    backgroundColor: 'rgba(0,0,0, 1)',
                 }}
             >
                 <TouchableOpacity 
@@ -122,7 +215,6 @@ const TourInfo = ({ navigation, route }) => {
                     }} 
                     onPress={ () => likePost() }
                 >
-                    
                     <LottieView 
                         ref={ animationRef }
                         style={{
@@ -149,63 +241,82 @@ const TourInfo = ({ navigation, route }) => {
                     }}
                 />
             </View>
-
-            <ScrollView
-                style={{
-                    padding: 20,
-                    marginTop: -50,
-                    borderRadius: 50,
-                    backgroundColor: 'white',
-                    height: "100%"
-                }}
-            >
-                <View 
-                    style={{ 
-                        display: 'flex', 
-                        flexDirection: 'row',
-                        justifyContent: 'space-between'
+            <>
+                <ScrollView
+                    style={{
+                        marginTop: -50,
+                        borderRadius: 40,
+                        borderBottomLeftRadius: 0,
+                        borderBottomRightRadius: 0,
+                        backgroundColor: 'white',
+                        width: "100%",
+                        height: "100%",
                     }}
                 >
-                    <Text style={{ fontSize: 19, fontWeight: "bold" }} >
+                    <ScrollView style={{
+                        paddingTop: 20,
+                        paddingBottom: 20,
+                        paddingLeft: 30,
+                        paddingRight: 30
+                    }}>
+
+                        <View 
+                            style={{ 
+                                display: 'flex', 
+                                flexDirection: 'row',
+                                justifyContent: 'space-between'
+                            }}
+                        >
+                            <Text style={{ fontSize: 19, fontWeight: "bold" }} >
+                                {
+                                    route?.params?.tour?.place || "Błąd"
+                                }
+                            </Text>
+                            {
+                                current?.dla?
+                                    <Dissabilities ar={ current.dla } />
+                                :null
+                            }
+                        </View>
                         {
-                            route?.params?.tour?.place || "Błąd"
+                            route?.params?.tour?.aprox?
+                                (<View style={{ display: 'flex', flexDirection: "row" }} >
+                                    <Text style={{ marginLeft: 10, color: 'red', fontSize: 16 }}>{ route?.params?.tour?.aprox }</Text> 
+                                    <Text style={{ fontSize: 16 }}> km długości { route?.params?.tour?.commune? ` | ${route.params.tour.commune}`: "" }</Text>
+                                </View>)
+                            :null
                         }
-                    </Text>
-                    {
-                        current?.dla?
-                            <Dissabilities ar={ current.dla } />
-                        :null
-                    }
-                </View>
-                {
-                    route?.params?.tour?.aprox?
-                        (<View style={{ display: 'flex', flexDirection: "row" }} >
-                            <Text style={{ marginLeft: 10, color: 'red', fontSize: 16 }}>{ route?.params?.tour?.aprox }</Text> 
-                            <Text style={{ fontSize: 16 }}> km długości</Text>
-                        </View>)
-                    :null
-                }
 
 
-                <SelectedCategory selected={ selectedCat } />
+                        <SelectedCategory selected={ selectedCat } switchCat={ switchCat } />
 
-                {
-                    current?.Galeria?
+                        <TourContent selected={ selectedCat } current={ current } />
+
+                        <Text style={{ marginTop: 20, fontSize: 24, fontFamily: 'Adamina-Regular' }}>Galeria</Text>
                         <ScrollView 
                             horizontal={ true }
-                            style={{ paddingTop: 10, paddingBottom: 10 }}
+                            style={{ marginBottom: 20 }}
                         >
                             {
-                                current.Galeria.map( (foto, i)=> (
-                                    <Image source={{ uri: foto }} style={{ width: 100, height: 180 }} />
+                                current?.Galeria && current.Galeria.map( (foto, i)=> (
+                                    <Image key={ `img-${i}` } source={{ uri: foto }} style={{ borderRadius: 10, width: 250, height: 300, marginTop: 10, marginBottom: 10, marginLeft: i>0? 10: 0 }} />
                                 ))
                             }
                         </ScrollView>
-                    :null
-                }
 
-            </ScrollView>
-        </View>
+                        <View>
+                            <Text>
+                                {
+                                    current?.info || ""
+                                }
+                            </Text>
+                        </View>
+                    </ScrollView>
+                    
+                    <Controlls current={ route.params.tour } navigation={ navigation } swtichPost={ swtichPost } />
+                </ScrollView>
+            </>
+        </>
     );
 }
 

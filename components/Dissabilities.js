@@ -13,14 +13,16 @@ const Dissabilities = ({ ar }) => {
         <View
             style={{
                 display: "flex",
-                flexDirection: "row"
+                flexDirection: "row",
+                justifyContent: 'center',
+                alignItems: 'center'
             }}
         >
             { 
                 ar.map( (a, i) => (
                     <View key={ `i-${i}`} style={{ marginRight: 5 }} >
                         {
-                            a === 1 && <Icon name={ icons[i] } type="font-awesome" />
+                            a === 1 && <Icon name={ icons[i] } type="font-awesome" size={ 20 } />
                         }
                     </View>
                 )) 
