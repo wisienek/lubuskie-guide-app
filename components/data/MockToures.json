@@ -6,6 +6,7 @@
         "img": "https://i.imgur.com/iHAJj98.jpg",
         "categories": ["Miasto", "Historia"],
         "aprox": 2.5,
+        "commune": "spacer",
         "parent": true,
         "next": 1,
         "prev": null
